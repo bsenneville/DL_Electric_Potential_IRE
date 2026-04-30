@@ -60,8 +60,18 @@ This repository provides the **training implementation**, **synthetic data gener
 
 The dataset consists of **voxelized electrode configurations** and their corresponding **basis-function fields** (solutions to the elliptic PDE with $\sigma = 1$).
 
+**Notes**:
+
+- Needle endpoints are **uniformly sampled** within the domain.
+- Active segments are voxelized using **3D Bresenham’s algorithm** (`Bresenham3D.py`).
+- PDE is solved with **Bi-CGSTAB** (`Simulate_Basis_Fonctions.py`) and **Neumann boundary conditions**.
+  
 ### **2. Train the 3D U-Net Model**
 
+- **Encoder-Decoder** with skip connections.
+- **Input**: Voxelized needle configuration (values: `-1`=inactive, `0`=background, `1`=active).
+- **Output**: Basis-function field $v_l$ (3D volume).
+  
 ### **3. Inference: Predict Basis Functions**
 
 **Run inference on a new electrode configuration**:
