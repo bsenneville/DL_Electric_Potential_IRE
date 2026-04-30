@@ -58,6 +58,13 @@ This repository provides the **training implementation**, **synthetic data gener
 
 ### **1. Generate Synthetic Training Data**
 
+The dataset consists of **voxelized electrode configurations** and their corresponding **basis-function fields** (solutions to the elliptic PDE with $\sigma = 1$).
+
+### **2. Train the 3D U-Net Model**
+
+### **3. Inference: Predict Basis Functions**
+
+**Run inference on a new electrode configuration**:
 
 ## **🔬 Methodology Details**
 
