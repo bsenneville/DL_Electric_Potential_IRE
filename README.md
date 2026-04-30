@@ -58,3 +58,45 @@ This repository provides the **training implementation**, **synthetic data gener
 
 ### **1. Generate Synthetic Training Data**
 
+
+## **🔬 Methodology Details**
+
+### **Model Input/Output**
+
+
+| Component          | Description                                                                                  |
+| ------------------ | -------------------------------------------------------------------------------------------- |
+| **Input**          | 3D voxel grid: `-1` (inactive needle), `0` (background), `1` (active needle).                |
+| **Output**         | Basis-function field $v_l$ (solution to $\nabla \cdot (\sigma \nabla v_l) = 0$).             |
+| **PDE Solver**     | Bi-CGSTAB with **Dirichlet** (needle surfaces) and **Neumann** (domain boundary) conditions. |
+| **Discretization** | 2nd-order finite differences.                                                                |
+
+
+---
+
+## **📜 Citation**
+
+If you use this code or framework in your research, please cite our paper:
+
+```bibtex
+@article{desier2026hybrid,
+  title={Hybrid Learning/Numerical Framework for Fast and Robust Electric Field Simulation in Irreversible Electroporation},
+  author = {Kylian Desier and Olivier Sutter and Luc Lafitte and Laurent Facq and Olivier Seror and Clair Poignard and Baudouin {Denis de Senneville}},
+  journal = {Computer Methods and Programs in Biomedicine},
+  pages = {109408},
+  year = {2026},
+  issn = {0169-2607},
+  doi = {https://doi.org/10.1016/j.cmpb.2026.109408},
+  url = {https://www.sciencedirect.com/science/article/pii/S016926072600163X},
+}
+
+```
+
+**Acknowledgments**:  
+This work was supported by:
+
+- Plan Cancer MECI (`PC_MECI_21CM119_00`)
+- Institut National du Cancer (INCa, PLBIO `2023-156`)
+- ANR projects: IMITATE, MIRE4VTACH, DEVIN
+- GENCI/IDRIS (Grant `2023-AD010614857R1` on Jean Zay supercomputer).
+
