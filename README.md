@@ -48,7 +48,7 @@ This repository provides the **training implementation**, **synthetic data gener
 1. Clone the repository:
   ```bash
    git clone https://github.com/bsenneville/DL_Electric_Potential_IRE.git
-   cd ire-hybrid-framework
+   cd DL_Electric_Potential_IRE-main
   ```
 
 
