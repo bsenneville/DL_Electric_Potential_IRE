@@ -1,6 +1,4 @@
-# **Hybrid Learning/Numerical Framework for Fast Electric Field Simulation in IRE**
-
-*Rapid approximation of electric potential fields in Irreversible Electroporation (IRE) using deep learning and numerical refinement.*
+# **Rapid approximation of electric potential fields in Irreversible Electroporation (IRE) using deep learning and numerical refinement.*
 
 ---
 
