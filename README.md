@@ -22,14 +22,18 @@ This repository provides the **training implementation**, **synthetic data gener
 │   ├── fill_matrix_sparsekronecker.py  # Constructs the 1D/2D/3D discrete Laplacian matrix with Neumann boundary conditions
 │   └── simulation_data.py              # Main data generation pipeline
 │
-├── models/                    # Deep learning components
-│   ├── UNet3D.py              # 3D U-Net architecture
-│   ├── dataset.py             # Dataset for electrode configurations
-│   ├── inference.py           # Model inference script
-│   ├── loss.py                # Custom loss functions (e.g., MSE + physical constraints)
-│   └── train.py               # Training script (supports small batch sizes)
-│
-├── LICENSE                    # License
+└── models/                            # Deep learning components
+    ├── data/                          # Directory for simulated data
+    │   └── simulated_data_directory/  # Contains generated simulation data
+    ├── model/                         # Directory for trained models
+    │   └── trained_model_directory/   # Contains saved trained models
+    ├── output/                        # Directory for model outputs
+    │   └── electric_potential_output_directory/  # Contains electric potential predictions or results
+    ├── UNet3D.py                      # 3D U-Net architecture
+    ├── dataset.py                     # Dataset for electrode configurations
+    ├── inference.py                   # Model inference script
+    ├── loss.py                        # Custom loss functions
+    └── train.py                       # Training script
 └── README.md                  # This file
 ```
 
