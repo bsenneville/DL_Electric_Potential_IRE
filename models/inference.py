@@ -16,13 +16,12 @@ if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # Dataset
-    parser.add_argument('--data_folder', type=str, default='C:\\Users\\bdenisde\\Documents\\Donnees\\tmp\\CNN_IRE_floating_potential\\data25')
+    parser.add_argument('--data_folder', type=str, default='.\\data')
     parser.add_argument('--fold', type=int, default=0)
     parser.add_argument('--seeding', type=int, default=0)
     parser.add_argument('--no_output_normalization', default=True,action='store_false')
     # Model
-    # parser.add_argument('--depth', type=int, default=5)
-    parser.add_argument('--depth', type=int, default=2)
+    parser.add_argument('--depth', type=int, default=5)
     parser.add_argument('--batch_size', type=int, default=2)
     parser.add_argument('--DS', type=int, default=-1)
 
@@ -69,10 +68,8 @@ if __name__ == '__main__':
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     model = UNet3D(depth=depth, in_channels=1, out_channels=out_channels , between_channels = 64, deep_supervision=deep_supervision, size=input.shape[-3])
-    model.load_state_dict(torch.load('C:\\Users\\bdenisde\\Documents\\Donnees\\tmp\\CNN_IRE_floating_potential\\model\\model_myjob_20260411_094322_best_vloss', map_location=device))
-    # model.load_state_dict(torch.load('./model/model_L2_no_output_normalization_20241125_180109_best_vloss', map_location=device))
+    model.load_state_dict(torch.load('.\\model\\model_myjob_20260411_094322_best_vloss', map_location=device))
     model = model.to(device)
-    # compiled_model = torch.compile(model)
     compiled_model = model
     
 
@@ -107,8 +104,7 @@ if __name__ == '__main__':
                     image_nifti.SetDirection(tuple(name[1][j].numpy()))
                     image_nifti.SetOrigin(tuple(name[2][j].numpy()))
                     image_nifti.SetSpacing(tuple(name[3][j].numpy()))
-                    # sitk.WriteImage(image_nifti, './output/'+name[0][j])
-                    sitk.WriteImage(image_nifti, 'C:\\Users\\bdenisde\\Documents\\Donnees\\tmp\\CNN_IRE_floating_potential\\output\\'+name[0][j])
+                    sitk.WriteImage(image_nifti, '\\output\\'+name[0][j])
 
                 vloss_MSE.append(torch.mean(nn.MSELoss(reduction='none')(output, gt), dim=(1,2,3,4)).cpu().numpy())
                 vloss_MAE.append(torch.mean(nn.L1Loss(reduction='none')(output, gt), dim=(1,2,3,4)).cpu().numpy())

@@ -2,7 +2,7 @@ import torch
 import os
 import tqdm
 import numpy as np
-from UNet3Dv2 import UNet3D
+from UNet3D import UNet3D
 from dataset import splitting_all
 # from torch.utils.tensorboard import SummaryWriter
 from datetime import datetime
@@ -18,11 +18,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # General
     parser.add_argument('--name', type=str, default='myjob')
-    parser.add_argument('--save_model', type=str, default='C:\\Users\\bdenisde\\Documents\\Donnees\\tmp\\CNN_IRE_floating_potential\\model')
-    parser.add_argument('--save_writer', type=str, default='C:\\Users\\bdenisde\\Documents\\Donnees\\tmp\\CNN_IRE_floating_potential\\runs')
+    parser.add_argument('--save_model', type=str, default='.\\model')
     parser.add_argument('--precise', default=False, action='store_true')
     # Dataset
-    parser.add_argument('--data_folder', type=str, default='C:\\Users\\bdenisde\\Documents\\Donnees\\tmp\\CNN_IRE_floating_potential\\data25')
+    parser.add_argument('--data_folder', type=str, default='.\\data')
     parser.add_argument('--no_output_normalization', default=True,action='store_false')
     parser.add_argument('--fold', type=int, default=0)
     parser.add_argument('--seeding', type=int, default=0)
@@ -200,16 +199,6 @@ if __name__ == '__main__':
             if epoch%10 == 9:
                 torch.save(model.state_dict(), model_path+'_last')
                 print('Model saved to {}'.format(model_path+'_last'))
-                # torch.save({
-                #     'model_state_dict': model.state_dict(),
-                #     'optimizer_state_dict': optimizer.state_dict(),
-                #     'scheduler_state_dict': scheduler.state_dict(),
-                #     'scaler_state_dict': scaler.state_dict(),
-                #     'best_vloss': best_vloss,
-                #     'epoch': epoch,
-                #     'MAX_EPOCH': EPOCHS,
-                #     'timestamp': timestamp
-                # }, model_path+'_last')
                     
         if patience > 150:
             break
