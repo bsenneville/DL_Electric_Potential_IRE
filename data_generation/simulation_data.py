@@ -26,7 +26,7 @@ SBF.tolerence = tolerence
 number_needle = 3  # Number of electrodes per simulation
     
 # Output directory for simulation data
-data_folder = "C:\\Users\\bdenisde\\Documents\\Donnees\\tmp\\CNN_IRE_floating_potential\\data\\"
+data_folder = ".\\models\\data\\"
 
 """
 Main Simulation Loop:
@@ -44,6 +44,7 @@ for i in range(0, nb_simulation):
         data_folder+'needles_coord_{}_{}.txt'.format(number_needle, i),
         number_needle, 100, 100, 100
     )
+    
     # Read needle coordinates from file
     [nb_needles, tip_coord, tail_coord] = SBF.read_needle_coord(
         data_folder+'needles_coord_{}_{}.txt'.format(number_needle, i)
@@ -64,20 +65,17 @@ for i in range(0, nb_simulation):
         nx=25, ny=25, nz=25
     )
     # Save basis function g (needle mask)
-    image_nifti = nib.Nifti1Image(g, affine=np.eye(4))
-    nib.save(image_nifti, data_folder+'g_25_{}.nii.gz'.format(i))
+    # image_nifti = nib.Nifti1Image(g, affine=np.eye(4))
+    # nib.save(image_nifti, data_folder+'g_25_{}.nii.gz'.format(i))
     # Save source term f
-    image_nifti = nib.Nifti1Image(f, affine=np.eye(4))
-    nib.save(image_nifti, data_folder+'f_25_{}.nii.gz'.format(i))
+    # image_nifti = nib.Nifti1Image(f, affine=np.eye(4))
+    # nib.save(image_nifti, data_folder+'f_25_{}.nii.gz'.format(i))
 
     # Homogeneous conductivity (simplified model)
     conductivity = np.ones((25, 25, 25))
     # Direct implicit solver for low-resolution potential
     u = SBF.solve_IRE_Implicit(g, f, conductivity)
-    # Save potential u
-    image_nifti = nib.Nifti1Image(u, affine=np.eye(4))
-    nib.save(image_nifti, data_folder+'u_25_{}.nii.gz'.format(i))
-    print('Time for generation 25 = ', time.time()- start_time)
+    print('Time for generation 25x25x25 = ', time.time()- start_time)
 
     # --- 50x50x50 Grid Simulation ---
     """
@@ -94,11 +92,11 @@ for i in range(0, nb_simulation):
         nx=50, ny=50, nz=50
     )
     # Save basis function g
-    image_nifti = nib.Nifti1Image(g, affine=np.eye(4))
-    nib.save(image_nifti, data_folder+'g_50_{}.nii.gz'.format(i))
+    # image_nifti = nib.Nifti1Image(g, affine=np.eye(4))
+    # nib.save(image_nifti, data_folder+'g_50_{}.nii.gz'.format(i))
     # Save source term f
-    image_nifti = nib.Nifti1Image(f, affine=np.eye(4))
-    nib.save(image_nifti, data_folder+'f_50_{}.nii.gz'.format(i))
+    # image_nifti = nib.Nifti1Image(f, affine=np.eye(4))
+    # nib.save(image_nifti, data_folder+'f_50_{}.nii.gz'.format(i))
 
     # Homogeneous conductivity
     conductivity = np.ones((50, 50, 50))
@@ -106,10 +104,7 @@ for i in range(0, nb_simulation):
     u_lowres = zoom(u, 2, mode="nearest")
     # Iterative solver (BiCGSTAB) with multigrid initialization
     u = SBF.solve_IRE_bicgstab_fast(g, f, conductivity, u_lowres.flatten())
-    # Save potential u
-    image_nifti = nib.Nifti1Image(u, affine=np.eye(4))
-    nib.save(image_nifti, data_folder+'u_50_{}.nii.gz'.format(i))
-    print('Time for generation 50 = ', time.time()- start_time)
+    print('Time for generation 50x50x50 = ', time.time()- start_time)
 
     # --- 100x100x100 Grid Simulation ---
     """
@@ -128,6 +123,7 @@ for i in range(0, nb_simulation):
     # Save basis function g
     image_nifti = nib.Nifti1Image(g, affine=np.eye(4))
     nib.save(image_nifti, data_folder+'g_100_{}.nii.gz'.format(i))
+    
     # Save source term f
     image_nifti = nib.Nifti1Image(f, affine=np.eye(4))
     nib.save(image_nifti, data_folder+'f_100_{}.nii.gz'.format(i))
@@ -138,7 +134,8 @@ for i in range(0, nb_simulation):
     u_lowres = zoom(u, 2, mode="nearest")
     # Iterative solver (BiCGSTAB) with multigrid initialization
     u = SBF.solve_IRE_bicgstab_fast(g, f, conductivity, u_lowres.flatten())
+    
     # Save potential u
     image_nifti = nib.Nifti1Image(u, affine=np.eye(4))
-    nib.save(image_nifti, data_folder+'u_100_{}.nii.gz'.format(i))
+    nib.save(image_nifti, data_folder+'u_{}.nii.gz'.format(i))
     print('Time for generation 100 = ', time.time()- start_time)
